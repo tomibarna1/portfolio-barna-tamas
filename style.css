@@ -35,16 +35,16 @@ nav {
   align-items: center;
   justify-content: space-between;
   padding: 0 3rem;
-  background: rgba(242,242,239,0.97);
+  background: rgba(255,255,255,0.96);
   backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--border);
   box-shadow: 0 1px 0 var(--border);
 }
 
 html.dark nav {
-  background: rgba(22,22,22,0.97);
-  border-bottom: 1px solid rgba(255,255,255,0.07);
-  box-shadow: 0 1px 0 rgba(255,255,255,0.07);
+  background: rgba(10,10,10,0.97);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 1px 12px rgba(0,0,0,0.4);
 }
 
 html.dark .btn-dark,
