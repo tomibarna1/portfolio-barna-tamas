@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rólam — Barna Tamás</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script>if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('dark');</script>
+  <style>
+    /* ── MOTO HERO ── */
+    .moto-hero {
+      margin-top: 72px;
+      width: 100%;
+      height: 45vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .moto-hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 50%;
+      display: block;
+      filter: brightness(0.95);
+    }
+
+    .moto-hero-text {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 3rem;
+      color: rgba(255,255,255,0.5);
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    /* ── QUOTE ── */
+    .about-quote {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 5rem 2rem 3rem;
+    }
+
+    .about-quote blockquote {
+      font-size: clamp(1.4rem, 3vw, 2.2rem);
+      font-weight: 300;
+      letter-spacing: -0.025em;
+      line-height: 1.4;
+      color: var(--text);
+      border-left: 3px solid var(--text);
+      padding-left: 1.75rem;
+    }
+
+    /* ── MAIN GRID ── */
+    .about-main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 3rem 2rem 5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .about-text p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.95;
+      margin-bottom: 1.25rem;
+    }
+
+    .about-text p:last-of-type { margin-bottom: 0; }
+
+    .about-photo {
+      border-radius: 6px;
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      position: sticky;
+      top: 90px;
+    }
+
+    .about-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ── DIVIDER ── */
+    .about-divider {
+      height: 1px;
+      background: var(--border);
+      max-width: 960px;
+      margin: 0 auto 3rem;
+    }
+
+    /* ── SPECS ── */
+    .about-specs {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 2rem 5rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.5rem;
+    }
+
+    .spec-block h3 {
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.85rem;
+    }
+
+    .spec-block ul {
+      list-style: none;
+      font-size: 0.9rem;
+      line-height: 2.1;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 2rem;
+    }
+
+    .tag {
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.85rem;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 640px) {
+      .about-main { grid-template-columns: 1fr; }
+      .about-photo { position: static; aspect-ratio: 4/3; }
+      .about-specs { grid-template-columns: 1fr 1fr; }
+      .moto-hero { height: 45vw; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="logo">Barna Tamás</a>
+    <ul>
+      <li><a href="munkak.html" data-i18n="nav-munkak">Munkáim</a></li>
+      <li><a href="rolam.html" class="active" data-i18n="nav-rolam">Rólam</a></li>
+      <li><a href="kapcsolat.html" data-i18n="nav-kapcsolat">Kapcsolat</a></li>
+    </ul>
+    <div class="nav-controls">
+      <button class="lang-btn" id="langToggle">EN</button>
+      <button class="theme-btn" id="themeToggle" aria-label="Téma váltás"></button>
+    </div>
+  </nav>
+
+  <!-- MOTO HERO -->
+  <div class="moto-hero">
+    <img src="images/moto-dust.jpg" alt="Motorozás" />
+    <span class="moto-hero-text" data-i18n="moto-caption">Budapest, éjjel</span>
+  </div>
+
+  <!-- QUOTE -->
+  <div class="about-quote">
+    <blockquote>
+      <span data-i18n="rolam-quote">&ldquo;Kevesebb sablon, több gondolkodás. Minden kép egyedi megközelítést kap.&rdquo;</span>
+    </blockquote>
+  </div>
+
+  <!-- MAIN GRID: szöveg + laptop fotó -->
+  <div class="about-main">
+    <div class="about-text">
+      <p data-i18n="about-p1">Autók és motorkerékpárok vizuális megjelenítésére specializálódtam — fotóban és mozgóképben egyaránt. Nem hobbi, nem mellékes tevékenység: szenvedély, ami mindent áthat.</p>
+      <p data-i18n="about-p2">A szerkesztés során képes vagyok órákat tölteni egyetlen részlettel, mert pontosan tudom, mi a különbség a jó kép és az emlékezetes kép között. Nem dolgozom presetek és sablonok alapján — minden anyag egyedi megközelítést kap.</p>
+      <p data-i18n="about-p3">Napi szinten dolgozom Lightroom-ban, Premiere Pro-ban és After Effects-ben. A szerkesztés ugyanolyan szenvedélyem, mint maga a fotózás — addig nem állok meg, amíg a kép nem mutatja azt, amit én éreztem a helyszínen.</p>
+
+      <div class="tags">
+        <span class="tag" data-i18n="tag-egyedi">Egyedi szerkesztés</span>
+        <span class="tag" data-i18n="tag-preset">Preset-mentes</span>
+        <span class="tag" data-i18n="tag-sportos">Sportos</span>
+        <span class="tag" data-i18n="tag-esztetikus">Esztétikus</span>
+        <span class="tag" data-i18n="tag-benzines">Benzines</span>
+      </div>
+    </div>
+
+    <div class="about-photo">
+      <img src="images/editing-laptop-right.jpg" alt="Szerkesztés közben" />
+    </div>
+  </div>
+
+  <div class="about-divider"></div>
+
+  <!-- SPECS -->
+  <div class="about-specs">
+    <div class="spec-block">
+      <h3 data-i18n="spec-szak-title">Szakterület</h3>
+      <ul>
+        <li data-i18n="spec-szak-1">Autófotózás</li>
+        <li data-i18n="spec-szak-2">Motorfotózás</li>
+        <li data-i18n="spec-szak-3">Videókészítés</li>
+        <li data-i18n="spec-szak-4">Részletfotózás</li>
+        <li data-i18n="spec-szak-5">Termékfotózás</li>
+      </ul>
+    </div>
+    <div class="spec-block">
+      <h3 data-i18n="spec-sw-title">Szoftverek</h3>
+      <ul>
+        <li>Adobe Lightroom</li>
+        <li>Adobe Premiere Pro</li>
+        <li>Adobe After Effects</li>
+      </ul>
+    </div>
+    <div class="spec-block">
+      <h3 data-i18n="spec-cars-title">Motorok, autók</h3>
+      <ul>
+        <li>Porsche</li>
+        <li>BMW</li>
+        <li>Audi</li>
+        <li>Triumph</li>
+        <li>Yamaha</li>
+      </ul>
+    </div>
+  </div>
+
+  <footer>© 2026 Barna Tamás</footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

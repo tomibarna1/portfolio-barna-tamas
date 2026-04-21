@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Munkák — Barna Tamás</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script>if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('dark');</script>
+  <style>
+    /* ── MÉDIA TABS ── */
+    .media-tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 3rem;
+    }
+
+    .media-tab {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 400;
+      padding: 1rem 2.25rem;
+      border: none;
+      background: none;
+      color: var(--muted);
+      cursor: pointer;
+      position: relative;
+      transition: color 0.2s;
+      letter-spacing: 0.01em;
+    }
+
+    .media-tab:hover { color: var(--text); }
+
+    .media-tab.active {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .media-tab.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px; left: 0; right: 0;
+      height: 2px;
+      background: var(--text);
+    }
+
+    /* ── FOTÓK LAYOUT: sidebar + galéria ── */
+    .foto-layout {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .filter-sidebar {
+      position: sticky;
+      top: 90px;
+    }
+
+    .filter-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .filter-btn {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--muted);
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.2s;
+      width: 100%;
+    }
+
+    .filter-btn:first-child { border-top: 1px solid var(--border); }
+    .filter-btn:hover { color: var(--text); }
+    .filter-btn.active { color: var(--text); font-weight: 500; }
+
+    /* ── GALÉRIA ── */
+    .gallery {
+      columns: 2;
+      column-gap: 0.75rem;
+    }
+
+    .gallery-item {
+      break-inside: avoid;
+      margin-bottom: 0.75rem;
+      overflow: hidden;
+      border-radius: 4px;
+      cursor: zoom-in;
+    }
+
+    .gallery-item.hidden { display: none; }
+
+    .gallery-item img {
+      width: 100%;
+      display: block;
+      transition: transform 0.45s ease;
+    }
+
+    .gallery-item:hover img { transform: scale(1.03); }
+
+    /* ── VIDEÓK (in-tab) ── */
+    .video-section { margin-bottom: 3.5rem; }
+
+    .video-section h3 {
+      font-size: 1rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+    }
+
+    .videos-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+
+    .video-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .video-item iframe,
+    .video-item video {
+      width: 100%;
+      aspect-ratio: 16/9;
+      display: block;
+      border: none;
+    }
+
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: rgba(0,0,0,0.92);
+      align-items: center;
+      justify-content: center;
+      cursor: zoom-out;
+    }
+
+    .lightbox.open { display: flex; }
+    .lightbox img { max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 3px; }
+    .lightbox-close { position: absolute; top: 1.5rem; right: 1.75rem; color: rgba(255,255,255,0.6); font-size: 1.5rem; cursor: pointer; transition: color 0.2s; }
+    .lightbox-close:hover { color: #fff; }
+
+    @media (max-width: 768px) {
+      .foto-layout { grid-template-columns: 1fr; gap: 1.5rem; }
+      .filter-sidebar { position: static; }
+      .filter-list { flex-direction: row; flex-wrap: wrap; gap: 0.4rem; border-top: none; }
+      .filter-btn {
+        border: 1px solid var(--border) !important;
+        border-radius: 100px;
+        padding: 0.35rem 0.9rem;
+        width: auto;
+        font-size: 0.78rem;
+      }
+      .filter-btn.active { background: var(--text); color: #fff; border-color: var(--text) !important; }
+      .gallery { columns: 1; }
+      .videos-grid, .reels-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 480px) { .gallery { columns: 1; } }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="logo">Barna Tamás</a>
+    <ul>
+      <li><a href="munkak.html" class="active" data-i18n="nav-munkak">Munkáim</a></li>
+      <li><a href="rolam.html" data-i18n="nav-rolam">Rólam</a></li>
+      <li><a href="kapcsolat.html" data-i18n="nav-kapcsolat">Kapcsolat</a></li>
+    </ul>
+    <div class="nav-controls">
+      <button class="lang-btn" id="langToggle">EN</button>
+      <button class="theme-btn" id="themeToggle" aria-label="Téma váltás"></button>
+    </div>
+  </nav>
+
+  <div class="page-content">
+
+    <!-- MÉDIA TABS -->
+    <div class="media-tabs">
+      <button class="media-tab active" data-tab="foto" data-i18n="tab-foto">Fotók</button>
+      <button class="media-tab" data-tab="video" data-i18n="tab-video">Videók</button>
+    </div>
+
+    <!-- ── FOTÓK TAB ── -->
+    <div id="tab-foto">
+      <div class="foto-layout">
+
+        <!-- BAL: SZŰRŐ -->
+        <aside class="filter-sidebar">
+          <ul class="filter-list">
+            <li><button class="filter-btn active" data-filter="osszes" data-i18n="filter-osszes">Összes</button></li>
+            <li><button class="filter-btn" data-filter="auto" data-i18n="filter-auto">Autó</button></li>
+            <li><button class="filter-btn" data-filter="motor" data-i18n="filter-motor">Motor</button></li>
+            <li><button class="filter-btn" data-filter="egyeb" data-i18n="filter-egyeb">Egyéb</button></li>
+          </ul>
+        </aside>
+
+        <!-- JOBB: GALÉRIA -->
+      <div class="gallery">
+        <div class="gallery-item" data-cat="auto">
+          <img src="images/m3-gray-mirror.png"    alt="BMW M3 — tükör"                loading="lazy" />
+        </div>
+        <div class="gallery-item" data-cat="auto">
+          <img src="images/m3-blue-front.png"     alt="BMW M3 kék — eleje"            loading="lazy" />
+        </div>
+        <div class="gallery-item" data-cat="auto">
+          <img src="images/m3-blue-wheel.png"     alt="BMW M3 kék — kerék"            loading="lazy" />
+        </div>
+        <div class="gallery-item" data-cat="auto">
+          <img src="images/m3-blue-badge.png"     alt="BMW M3 kék — M badge"          loading="lazy" />
+        </div>
+        <div class="gallery-item" data-cat="auto">
+          <img src="images/m3-touring-rear.png"   alt="BMW M3 Touring — hátulról"     loading="lazy" />
+        </div>
+        <div class="gallery-item" data-cat="auto">
+          <img src="images/m3-touring-wheel.png"  alt="BMW M3 Touring — kerék"        loading="lazy" />
+        </div>
+        <div class="gallery-item" data-cat="auto">
+          <img src="images/m3-sixnine-ext.png"    alt="BMW M3 — Sixnine Wheels"       loading="lazy" />
+        </div>
+        <div class="gallery-item" data-cat="motor">
+          <img src="images/triumph-scrambler.jpg" alt="Triumph Super Scrambler"       loading="lazy" />
+        </div>
+        <div class="gallery-item" data-cat="auto">
+          <img src="images/sq2-ext.png"            alt="Audi SQ2"                      loading="lazy" />
+        </div>
+        <div class="gallery-item" data-cat="auto">
+          <img src="images/cayenne-ext.png"        alt="Porsche Cayenne"               loading="lazy" />
+        </div>
+        <div class="gallery-item" data-cat="auto">
+          <img src="images/rsq8-brake.png"         alt="Audi RSQ8 — fék"               loading="lazy" />
+        </div>
+        <div class="gallery-item" data-cat="motor">
+          <img src="images/yamaha-xjr.jpg"         alt="Yamaha XJR1300"                loading="lazy" />
+        </div>
+        <div class="gallery-item" data-cat="auto">
+          <img src="images/m3-dark-ext.png"        alt="BMW M3 DarkTrace"              loading="lazy" />
+        </div>
+        <div class="gallery-item" data-cat="auto">
+          <img src="images/cayenne-badge.png"      alt="Porsche Cayenne — embléma"     loading="lazy" />
+        </div>
+        <div class="gallery-item" data-cat="auto">
+          <img src="images/rs7-front.png"          alt="Audi RS7"                      loading="lazy" />
+        </div>
+        <div class="gallery-item" data-cat="egyeb">
+          <img src="images/sixnine-boxes.png"      alt="Sixnine Wheels"                loading="lazy" />
+        </div>
+        <div class="gallery-item" data-cat="auto">
+          <img src="images/m3-dark-seats.png"      alt="BMW M3 — belső"                loading="lazy" />
+        </div>
+        <div class="gallery-item" data-cat="motor">
+          <img src="images/triumph-street.jpg"     alt="Triumph — utcán"               loading="lazy" />
+        </div>
+        <div class="gallery-item" data-cat="auto">
+          <img src="images/cayenne-int.png"        alt="Porsche Cayenne — belső"       loading="lazy" />
+        </div>
+        <div class="gallery-item" data-cat="auto">
+          <img src="images/r8-ext.png"             alt="Audi R8 — eleje"               loading="lazy" />
+        </div>
+        <div class="gallery-item" data-cat="auto">
+          <img src="images/r8-rear.png"            alt="Audi R8 — hátulról"            loading="lazy" />
+        </div>
+        <div class="gallery-item" data-cat="auto">
+          <img src="images/r8-grille.png"          alt="Audi R8"                       loading="lazy" />
+        </div>
+        <div class="gallery-item" data-cat="auto">
+          <img src="images/x5-front.png"           alt="BMW X5"                        loading="lazy" />
+        </div>
+        <div class="gallery-item" data-cat="egyeb">
+          <img src="images/sixnine-detail.png"     alt="Sixnine Wheels — detail"       loading="lazy" />
+        </div>
+        <div class="gallery-item" data-cat="auto">
+          <img src="images/rsq8-wheel.png"         alt="Audi RSQ8 — kerék"             loading="lazy" />
+        </div>
+        <div class="gallery-item" data-cat="auto">
+          <img src="images/rs7-white.png"          alt="Audi RS7"                      loading="lazy" />
+        </div>
+        <div class="gallery-item" data-cat="egyeb">
+          <img src="images/product-bmw.png"        alt="Servfaces — termékfotó"        loading="lazy" />
+        </div>
+        <div class="gallery-item" data-cat="egyeb">
+          <img src="images/sixnine-wheel.png"      alt="Sixnine Wheels — felni"        loading="lazy" />
+        </div>
+        <div class="gallery-item" data-cat="auto">
+          <img src="images/cayenne-detail.png"     alt="Porsche Cayenne e-Hybrid"      loading="lazy" />
+        </div>
+        <div class="gallery-item" data-cat="auto">
+          <img src="images/m3-blue-int.png"        alt="BMW M3 — belső"                loading="lazy" />
+        </div>
+        <div class="gallery-item" data-cat="auto">
+          <img src="images/r8-int.png"             alt="Audi R8 — belső"               loading="lazy" />
+        </div>
+        <div class="gallery-item" data-cat="egyeb">
+          <img src="images/product-int.png"        alt="Servfaces — termékfotó"        loading="lazy" />
+        </div>
+        <div class="gallery-item" data-cat="auto">
+          <img src="images/rs7-center.png"         alt="Audi RS7 — váltó"              loading="lazy" />
+        </div>
+      </div><!-- /.gallery -->
+      </div><!-- /.foto-layout -->
+    </div><!-- /#tab-foto -->
+
+    <!-- ── VIDEÓK TAB ── -->
+    <div id="tab-video" style="display:none">
+
+      <div class="video-section">
+        <h3 data-i18n="yt-label">YouTube</h3>
+        <div class="videos-grid">
+          <div class="video-item">
+            <iframe src="https://www.youtube.com/embed/Y9mnfuYkugU"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen></iframe>
+          </div>
+          <div class="video-item">
+            <iframe src="https://www.youtube.com/embed/1fqHpEugQ-A"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+
+      <div class="video-section">
+        <h3 data-i18n="local-label">Shortok</h3>
+        <div class="videos-grid">
+          <div class="video-item">
+            <video src="videos/darktrace-short.mp4" poster="images/thumb-darktrace.jpg" controls preload="none"></video>
+          </div>
+          <div class="video-item">
+            <video src="videos/ferrari-v2.mp4" poster="images/thumb-ferrari.jpg" controls preload="none"></video>
+          </div>
+          <div class="video-item">
+            <video src="videos/m3cs-reklam.mp4" poster="images/thumb-m3cs.jpg" controls preload="none"></video>
+          </div>
+          <div class="video-item">
+            <video src="videos/passat-edit.mp4" poster="images/thumb-passat.jpg" controls preload="none"></video>
+          </div>
+          <div class="video-item">
+            <video src="videos/rsq8-novitya.mp4" poster="images/thumb-rsq8.jpg" controls preload="none"></video>
+          </div>
+          <div class="video-item">
+            <video src="videos/skyfol-logo.mp4" poster="images/thumb-skyfol.jpg" controls preload="none"></video>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="lightbox" id="lightbox">
+    <span class="lightbox-close" id="lbClose">✕</span>
+    <img id="lbImg" src="" alt="" />
+  </div>
+
+  <footer>© 2026 Barna Tamás</footer>
+
+  <script src="main.js"></script>
+  <script>
+    // Media tabs
+    const mediaTabs = document.querySelectorAll('.media-tab');
+    mediaTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        mediaTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById('tab-foto').style.display = tab.dataset.tab === 'foto' ? '' : 'none';
+        document.getElementById('tab-video').style.display = tab.dataset.tab === 'video' ? '' : 'none';
+      });
+    });
+
+    // Filter buttons
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const items = document.querySelectorAll('.gallery-item');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const f = btn.dataset.filter;
+        items.forEach(item => {
+          item.classList.toggle('hidden', f !== 'osszes' && item.dataset.cat !== f);
+        });
+      });
+    });
+
+    // Lightbox
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lbImg');
+    items.forEach(item => {
+      item.addEventListener('click', () => {
+        lbImg.src = item.querySelector('img').src;
+        lb.classList.add('open');
+      });
+    });
+    [lb, document.getElementById('lbClose')].forEach(el => el.addEventListener('click', () => lb.classList.remove('open')));
+    lbImg.addEventListener('click', e => e.stopPropagation());
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') lb.classList.remove('open'); });
+  </script>
+</body>
+</html>

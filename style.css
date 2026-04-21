@@ -1,0 +1,232 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #ffffff;
+  --surface: #f9f9f7;
+  --text: #1a1a1a;
+  --muted: #888;
+  --border: #e8e8e4;
+}
+
+html.dark {
+  --bg: #080808;
+  --surface: #161616;
+  --text: #f0f0ee;
+  --muted: #666666;
+  --border: #2a2a2a;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 3rem;
+  background: rgba(242,242,239,0.97);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 1px 0 var(--border);
+}
+
+html.dark nav {
+  background: rgba(22,22,22,0.97);
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.07);
+}
+
+html.dark .btn-dark,
+html.dark .btn-submit {
+  color: var(--bg);
+}
+
+html.dark .chips input[type="radio"]:checked + label {
+  color: var(--bg);
+}
+
+/* ── NAV CONTROLS ── */
+.nav-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.lang-btn, .theme-btn {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  border-radius: 3px;
+  transition: color 0.2s, border-color 0.2s;
+  line-height: 1;
+}
+
+.lang-btn {
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  padding: 0.35rem 0.65rem;
+}
+
+.theme-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+}
+
+.lang-btn:hover, .theme-btn:hover { color: var(--text); border-color: var(--text); }
+
+/* ── HERO FADE (with dark mode) ── */
+.hero-fade {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(to right, #ffffff 0%, #ffffff 28%, rgba(255,255,255,0) 62%);
+}
+
+html.dark .hero-fade {
+  background: linear-gradient(to right, #080808 0%, #080808 28%, rgba(8,8,8,0) 62%);
+}
+
+nav .logo {
+  font-weight: 600;
+  font-size: 1.1rem;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  color: var(--text);
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 2.5rem;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 1rem;
+  transition: color 0.2s;
+}
+
+nav a:hover { color: var(--text); }
+
+nav a.active {
+  color: var(--text);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* ── SECTION COMMONS ── */
+.page-content {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 7rem 2rem 5rem;
+}
+
+.section-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 3rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 1.75rem 2.5rem;
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+/* ── BUTTONS ── */
+.btn-primary {
+  display: inline-block;
+  padding: 0.75rem 1.75rem;
+  background: #ffffff;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  border-radius: 3px;
+  transition: opacity 0.2s;
+}
+
+.btn-primary:hover { opacity: 0.85; }
+
+.btn-secondary {
+  display: inline-block;
+  padding: 0.75rem 1.75rem;
+  border: 1px solid rgba(255,255,255,0.5);
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  border-radius: 3px;
+  transition: border-color 0.2s;
+}
+
+.btn-secondary:hover { border-color: #ffffff; }
+
+/* ── TAGS ── */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.tag {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  color: var(--muted);
+}
+
+@media (max-width: 768px) {
+  .hero-fade {
+    background: linear-gradient(to bottom, #ffffff 0%, #ffffff 25%, rgba(255,255,255,0) 60%);
+  }
+  html.dark .hero-fade {
+    background: linear-gradient(to bottom, #080808 0%, #080808 25%, rgba(8,8,8,0) 60%);
+  }
+}
+
+@media (max-width: 640px) {
+  nav ul { display: none; }
+  .page-content { padding: 5rem 1.25rem 3rem; }
+}

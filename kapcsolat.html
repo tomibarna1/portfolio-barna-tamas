@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kapcsolat — Barna Tamás</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script>if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('dark');</script>
+  <style>
+    .contact-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 6rem;
+      align-items: start;
+    }
+
+    .contact-intro h2 {
+      font-size: 2.5rem;
+      font-weight: 300;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      margin-bottom: 1.25rem;
+    }
+
+    .contact-intro p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.85;
+      margin-bottom: 2.5rem;
+    }
+
+    .contact-socials {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      text-decoration: none;
+      color: var(--text);
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+      transition: opacity 0.2s;
+    }
+
+    .social-link:first-child { border-top: 1px solid var(--border); }
+    .social-link:hover { opacity: 0.45; }
+    .social-link span { color: var(--muted); font-size: 0.8rem; font-weight: 400; }
+
+    /* ── FORM ── */
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .form-group label {
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      padding: 0.85rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--surface);
+      color: var(--text);
+      transition: border-color 0.2s;
+      outline: none;
+      resize: none;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--text);
+    }
+
+    .form-group textarea { min-height: 120px; }
+
+    /* ── KATEGÓRIA CHIPEK ── */
+    .chip-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .chips {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .chips input[type="radio"] { display: none; }
+
+    .chips label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.5rem 1.1rem;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      user-select: none;
+    }
+
+    .chips input[type="radio"]:checked + label {
+      background: var(--text);
+      color: #ffffff;
+      border-color: var(--text);
+    }
+
+    .chips label:hover { color: var(--text); border-color: var(--text); }
+
+    /* ── SUBMIT ── */
+    .btn-submit {
+      display: inline-block;
+      padding: 1rem 2.5rem;
+      background: var(--text);
+      color: #ffffff;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      align-self: flex-start;
+    }
+
+    .btn-submit:hover { opacity: 0.75; }
+
+    /* success message */
+    .form-success {
+      display: none;
+      padding: 1rem 1.25rem;
+      background: #f0faf0;
+      border: 1px solid #c3e6cb;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      color: #2d6a4f;
+    }
+
+    @media (max-width: 768px) {
+      .contact-wrap { grid-template-columns: 1fr; gap: 3rem; }
+      .contact-intro h2 { font-size: 1.75rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="logo">Barna Tamás</a>
+    <ul>
+      <li><a href="munkak.html" data-i18n="nav-munkak">Munkáim</a></li>
+      <li><a href="rolam.html" data-i18n="nav-rolam">Rólam</a></li>
+      <li><a href="kapcsolat.html" class="active" data-i18n="nav-kapcsolat">Kapcsolat</a></li>
+    </ul>
+    <div class="nav-controls">
+      <button class="lang-btn" id="langToggle">EN</button>
+      <button class="theme-btn" id="themeToggle" aria-label="Téma váltás"></button>
+    </div>
+  </nav>
+
+  <div class="page-content">
+    <p class="section-label" data-i18n="kapcsolat-label">Kapcsolat</p>
+
+    <div class="contact-wrap">
+
+      <!-- BAL: intro + social -->
+      <div class="contact-intro">
+        <h2 data-i18n="kapcsolat-title">Dolgozzunk<br>együtt.</h2>
+        <p data-i18n="kapcsolat-intro">Van egy autód vagy motorod, amelyről igazán méltó képet vagy videót szeretnél? Keress meg — meghallgatom az elképzelésed és megtaláljuk a legjobb megközelítést.<br><br>A lehető leggyorsabban válaszolok.</p>
+
+        <div class="contact-socials">
+          <a href="https://www.instagram.com" target="_blank" class="social-link">
+            Instagram
+            <span>↗</span>
+          </a>
+          <a href="https://www.youtube.com" target="_blank" class="social-link">
+            YouTube
+            <span>↗</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- JOBB: form -->
+      <div>
+        <form class="contact-form" name="contact" method="POST" data-netlify="true" id="contactForm">
+          <input type="hidden" name="form-name" value="contact" />
+
+          <!-- 1. sor: Jármű -->
+          <div>
+            <span class="chip-label" data-i18n="chip-label">Mivel kapcsolatban érdeklődsz?</span>
+            <div class="chips">
+              <input type="radio" name="jarmu" id="k-auto" value="Autó">
+              <label for="k-auto" data-i18n="chip-auto">Autó</label>
+
+              <input type="radio" name="jarmu" id="k-motor" value="Motor">
+              <label for="k-motor" data-i18n="chip-motor">Motor</label>
+
+              <input type="radio" name="jarmu" id="k-auto-motor" value="Autó+Motor" checked>
+              <label for="k-auto-motor" data-i18n="chip-auto-motor">Autó+Motor</label>
+            </div>
+          </div>
+
+          <!-- 2. sor: Szolgáltatás -->
+          <div>
+            <span class="chip-label" data-i18n="chip-label-szolg">Melyik szolgáltatás érdekel?</span>
+            <div class="chips">
+              <input type="radio" name="szolgaltatas" id="k-foto" value="Fotó">
+              <label for="k-foto" data-i18n="chip-foto">Fotó</label>
+
+              <input type="radio" name="szolgaltatas" id="k-video" value="Videó">
+              <label for="k-video" data-i18n="chip-video">Videó</label>
+
+              <input type="radio" name="szolgaltatas" id="k-foto-video" value="Fotó+Videó" checked>
+              <label for="k-foto-video" data-i18n="chip-foto-video">Fotó+Videó</label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="nev" data-i18n="label-nev">Név *</label>
+            <input type="text" id="nev" name="nev" placeholder="A te neved / Cégnév" data-i18n-placeholder="placeholder-nev" required />
+          </div>
+
+          <div class="form-group">
+            <label for="email" data-i18n="label-email">Email *</label>
+            <input type="email" id="email" name="email" placeholder="Email címed (erre fog érkezni a válasz)" data-i18n-placeholder="placeholder-email" required />
+          </div>
+
+          <div class="form-group">
+            <label for="uzenet" data-i18n="label-uzenet">Üzenet *</label>
+            <textarea id="uzenet" name="uzenet" placeholder="Ide írd a munkát amit szeretnél / kérdésed" data-i18n-placeholder="placeholder-uzenet" required></textarea>
+          </div>
+
+          <div class="form-success" id="formSuccess" data-i18n="form-success">
+            Köszönöm az üzeneted — hamarosan jelentkezem!
+          </div>
+
+          <button type="submit" class="btn-submit" data-i18n="btn-kuldes">Küldés</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>© 2026 Barna Tamás</footer>
+
+  <script src="main.js"></script>
+  <script>
+    // Lokális teszteléshez (Netlify-on a data-netlify kezeli automatikusan)
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      if (!window.location.hostname.includes('netlify')) {
+        e.preventDefault();
+        document.getElementById('formSuccess').style.display = 'block';
+        this.reset();
+      }
+    });
+  </script>
+</body>
+</html>

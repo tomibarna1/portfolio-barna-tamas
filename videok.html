@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Videók — Barna Tamás</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .video-section { margin-bottom: 4rem; }
+
+    .video-section h2 {
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.5rem;
+      color: var(--muted);
+    }
+
+    .videos-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+
+    .video-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .video-item iframe {
+      width: 100%;
+      aspect-ratio: 16/9;
+      display: block;
+      border: none;
+    }
+
+    .reels-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+
+    .reel-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+    }
+
+    .reel-item blockquote {
+      margin: 0 !important;
+      min-width: unset !important;
+      width: 100% !important;
+    }
+
+    @media (max-width: 640px) {
+      .videos-grid, .reels-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="logo">Barna Tamás</a>
+    <ul>
+      <li><a href="munkak.html">Munkáim</a></li>
+      <li><a href="videok.html" class="active">Videók</a></li>
+      <li><a href="rolam.html">Rólam</a></li>
+      <li><a href="kapcsolat.html">Kapcsolat</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-content">
+    <p class="section-label">Videók</p>
+
+    <div class="video-section">
+      <h2>YouTube</h2>
+      <div class="videos-grid">
+        <div class="video-item">
+          <iframe
+            src="https://www.youtube.com/embed/Y9mnfuYkugU"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+        <div class="video-item">
+          <iframe
+            src="https://www.youtube.com/embed/1fqHpEugQ-A"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+    </div>
+
+    <div class="video-section">
+      <h2>Instagram Reels</h2>
+      <div class="reels-grid">
+        <div class="reel-item">
+          <blockquote
+            class="instagram-media"
+            data-instgrm-permalink="https://www.instagram.com/reel/DWRi5gGCDBy/"
+            data-instgrm-version="14"
+            style="width:100%; min-width:unset;">
+          </blockquote>
+        </div>
+        <div class="reel-item">
+          <blockquote
+            class="instagram-media"
+            data-instgrm-permalink="https://www.instagram.com/reel/DT3FlzoiAi-/"
+            data-instgrm-version="14"
+            style="width:100%; min-width:unset;">
+          </blockquote>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>© 2026 Barna Tamás</footer>
+
+  <script async src="//www.instagram.com/embed.js"></script>
+</body>
+</html>

@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Barna Tamás — Fotós & Videós</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script>if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('dark');</script>
+  <style>
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Képek full-screen mögötte */
+    .hero-slide {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: right center;
+      opacity: 0;
+      transition: opacity 1.6s ease;
+    }
+
+    .hero-slide.active { opacity: 1; }
+
+    /* Szöveg a bal oldalon, relatív pozícióban */
+    .hero-left {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 100vh;
+      width: 50%;
+      padding: 8rem 3.5rem 5rem 3rem;
+    }
+
+    /* ── HERO SZÖVEG ANIMÁCIÓ ── */
+    .hero-label, .hero-left h1, .hero-left p, .hero-cta {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.7s ease forwards;
+    }
+
+    .hero-label   { animation-delay: 0.1s; }
+    .hero-left h1 { animation-delay: 0.3s; }
+    .hero-left p  { animation-delay: 0.5s; }
+    .hero-cta     { animation-delay: 0.7s; }
+
+    @keyframes fadeInUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-left h1 {
+      font-size: clamp(3.2rem, 7vw, 7rem);
+      font-weight: 300;
+      letter-spacing: -0.035em;
+      line-height: 1.0;
+      color: var(--text);
+      margin-bottom: 1.75rem;
+    }
+
+    .name-first {
+      font-size: 0.65em;
+      display: block;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-left h1 strong {
+      font-weight: 600;
+      font-size: 1em;
+      display: block;
+    }
+
+    .hero-left p {
+      font-size: 1rem;
+      color: var(--muted);
+      font-weight: 300;
+      max-width: 360px;
+      line-height: 1.85;
+      margin-bottom: 3rem;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-dark {
+      display: inline-block;
+      padding: 1.1rem 2.75rem;
+      background: var(--text);
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 500;
+      border-radius: 3px;
+      transition: opacity 0.2s;
+    }
+
+    .btn-dark:hover { opacity: 0.75; }
+
+    .btn-outline {
+      display: inline-block;
+      padding: 1.1rem 2.75rem;
+      border: 1.5px solid #bbb;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 400;
+      border-radius: 3px;
+      transition: border-color 0.2s;
+    }
+
+    .btn-outline:hover { border-color: var(--text); }
+
+    /* ── MARQUEE FILMSTRIP ── */
+    .marquee-section {
+      border-top: 1px solid var(--border);
+      padding: 4rem 0 0;
+    }
+
+    .marquee-row {
+      position: relative;
+    }
+
+    .marquee-wrap {
+      overflow: hidden;
+    }
+
+    .marquee-track {
+      display: flex;
+      gap: 0.6rem;
+      width: max-content;
+    }
+
+    .marquee-img {
+      height: 220px;
+      width: auto;
+      border-radius: 4px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .marquee-img img {
+      height: 100%;
+      width: auto;
+      display: block;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .marquee-img:hover img { transform: scale(1.04); }
+
+    /* Nyilak a marquee-hoz */
+    .marquee-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .marquee-arrow:hover { background: #f0f0ee; border-color: #bbb; }
+    .marquee-prev { left: 1rem; }
+    .marquee-next { right: 1rem; }
+
+    /* Összes kép gomb a marquee alatt */
+    .marquee-cta {
+      text-align: center;
+      padding: 2rem 0;
+    }
+
+    .marquee-all-btn {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 3px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .marquee-all-btn:hover { color: var(--text); border-color: var(--text); }
+
+    /* ── CTA STRIP ── */
+    .cta-strip {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 3.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 960px;
+      margin: 2rem auto 0;
+    }
+
+    .cta-strip h2 {
+      font-size: 1.5rem;
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1.4;
+    }
+
+    .cta-links { display: flex; gap: 1.75rem; align-items: center; }
+
+    .cta-link {
+      text-decoration: none;
+      color: var(--text);
+      font-size: 0.85rem;
+      font-weight: 500;
+      border-bottom: 1px solid var(--text);
+      padding-bottom: 2px;
+      transition: opacity 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .cta-link:hover { opacity: 0.4; }
+
+    .cta-link svg { flex-shrink: 0; }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .hero-left { width: 100%; padding: 7rem 1.5rem 3rem; }
+      .slide-prev { left: 1rem; }
+      .slide-next { right: 1rem; }
+      .cta-strip { flex-direction: column; gap: 1.5rem; text-align: center; }
+      .cta-links { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="logo">Barna Tamás</a>
+    <ul>
+      <li><a href="munkak.html" data-i18n="nav-munkak">Munkáim</a></li>
+      <li><a href="rolam.html" data-i18n="nav-rolam">Rólam</a></li>
+      <li><a href="kapcsolat.html" data-i18n="nav-kapcsolat">Kapcsolat</a></li>
+    </ul>
+    <div class="nav-controls">
+      <button class="lang-btn" id="langToggle">EN</button>
+      <button class="theme-btn" id="themeToggle" aria-label="Téma váltás"></button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <!-- Slideshow képek — csak landscape (full-screen, z-index 0) -->
+    <img class="hero-slide active" src="images/m3-dark-ext.png"    alt="BMW M3" />
+    <img class="hero-slide"        src="images/sq2-ext.png"         alt="Audi SQ2" />
+    <img class="hero-slide"        src="images/m3-dark-seats.png"   alt="BMW M3 belső" />
+
+    <!-- Gradient overlay (z-index 1) -->
+    <div class="hero-fade"></div>
+
+    <!-- Szöveg (z-index 2) -->
+    <div class="hero-left">
+      <p class="hero-label" data-i18n="hero-label">Fotó · Videó — Autó · Motor</p>
+      <h1>
+        <span class="name-first">Barna</span>
+        <strong>Tamás.</strong>
+      </h1>
+      <p data-i18n="hero-tagline">Az autók és motorok iránti szenvedélyem nem háttér — ez az alapja minden képnek, minden döntésnek.</p>
+      <div class="hero-cta">
+        <a href="munkak.html" class="btn-dark" data-i18n="btn-munkak">Munkáim</a>
+        <a href="kapcsolat.html" class="btn-outline" data-i18n="btn-kapcsolat">Kapcsolat</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MARQUEE FILMSTRIP -->
+  <div class="marquee-section reveal">
+    <div class="marquee-row">
+      <button class="marquee-arrow marquee-prev" aria-label="Előző">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <div class="marquee-wrap">
+        <div class="marquee-track" id="marqueeTrack">
+          <div class="marquee-img"><img src="images/m3-sixnine-ext.png"    alt="" /></div>
+          <div class="marquee-img"><img src="images/cayenne-ext.png"        alt="" /></div>
+          <div class="marquee-img"><img src="images/triumph-scrambler.jpg"  alt="" /></div>
+          <div class="marquee-img"><img src="images/rsq8-brake.png"         alt="" /></div>
+          <div class="marquee-img"><img src="images/rs7-front.png"          alt="" /></div>
+          <div class="marquee-img"><img src="images/yamaha-xjr.jpg"         alt="" /></div>
+          <div class="marquee-img"><img src="images/m3-dark-ext.png"        alt="" /></div>
+          <div class="marquee-img"><img src="images/cayenne-badge.png"      alt="" /></div>
+          <div class="marquee-img"><img src="images/sq2-ext.png"            alt="" /></div>
+          <div class="marquee-img"><img src="images/x5-front.png"           alt="" /></div>
+          <div class="marquee-img"><img src="images/triumph-street.jpg"     alt="" /></div>
+          <div class="marquee-img"><img src="images/r8-grille.png"          alt="" /></div>
+          <div class="marquee-img"><img src="images/m3-dark-seats.png"      alt="" /></div>
+          <!-- duplikált set -->
+          <div class="marquee-img"><img src="images/m3-sixnine-ext.png"    alt="" /></div>
+          <div class="marquee-img"><img src="images/cayenne-ext.png"        alt="" /></div>
+          <div class="marquee-img"><img src="images/triumph-scrambler.jpg"  alt="" /></div>
+          <div class="marquee-img"><img src="images/rsq8-brake.png"         alt="" /></div>
+          <div class="marquee-img"><img src="images/rs7-front.png"          alt="" /></div>
+          <div class="marquee-img"><img src="images/yamaha-xjr.jpg"         alt="" /></div>
+          <div class="marquee-img"><img src="images/m3-dark-ext.png"        alt="" /></div>
+          <div class="marquee-img"><img src="images/cayenne-badge.png"      alt="" /></div>
+          <div class="marquee-img"><img src="images/sq2-ext.png"            alt="" /></div>
+          <div class="marquee-img"><img src="images/x5-front.png"           alt="" /></div>
+          <div class="marquee-img"><img src="images/triumph-street.jpg"     alt="" /></div>
+          <div class="marquee-img"><img src="images/r8-grille.png"          alt="" /></div>
+          <div class="marquee-img"><img src="images/m3-dark-seats.png"      alt="" /></div>
+        </div>
+      </div>
+      <button class="marquee-arrow marquee-next" aria-label="Következő">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+
+    <!-- Összes kép -->
+    <div class="marquee-cta">
+      <a href="munkak.html" class="marquee-all-btn" data-i18n="marquee-all">Összes kép</a>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-strip reveal">
+    <h2 data-i18n="cta-title">Legyen szó sportautóról,<br>oldtimeről vagy éjszakai motorosról.</h2>
+    <div class="cta-links">
+      <a href="munkak.html" class="cta-link">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
+          <polyline points="21 15 16 10 5 21"/>
+        </svg>
+        <span data-i18n="cta-allphoto">Összes fotó</span>
+      </a>
+      <a href="kapcsolat.html" class="cta-link">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+          <polyline points="22,6 12,13 2,6"/>
+        </svg>
+        <span data-i18n="cta-contact">Írj nekem</span>
+      </a>
+    </div>
+  </div>
+
+  <footer style="margin-top: 4rem;">© 2026 Barna Tamás</footer>
+
+  <script src="main.js"></script>
+  <script>
+    // Hero slideshow
+    const slides = document.querySelectorAll('.hero-slide');
+    let current = 0;
+    let timer;
+
+    function goTo(idx) {
+      slides[current].classList.remove('active');
+      current = (idx + slides.length) % slides.length;
+      slides[current].classList.add('active');
+    }
+
+    function startTimer() {
+      clearInterval(timer);
+      timer = setInterval(() => goTo(current + 1), 5000);
+    }
+
+    startTimer();
+
+    // Marquee — JS-vezérelt, sima animációval
+    const track = document.getElementById('marqueeTrack');
+    let autoPos = 0;
+    let manualOffset = 0;
+    let paused = false;
+
+    function marqueeLoop() {
+      const half = track.scrollWidth / 2;
+      if (!paused) {
+        autoPos += 0.55;
+        if (autoPos >= half) autoPos -= half;
+      }
+      // manualOffset lassan 0-ra cseng le → sima görgetés érzet
+      manualOffset *= 0.91;
+      const display = ((autoPos + manualOffset) % half + half) % half;
+      track.style.transform = `translateX(-${display}px)`;
+      requestAnimationFrame(marqueeLoop);
+    }
+
+    marqueeLoop();
+
+    // Pause: képek hover + nyilak hover
+    [
+      document.querySelector('.marquee-wrap'),
+      document.querySelector('.marquee-prev'),
+      document.querySelector('.marquee-next')
+    ].forEach(el => {
+      el.addEventListener('mouseenter', () => paused = true);
+      el.addEventListener('mouseleave', () => paused = false);
+    });
+
+    document.querySelector('.marquee-prev').addEventListener('click', () => {
+      const half = track.scrollWidth / 2;
+      autoPos -= 320;
+      if (autoPos < 0) autoPos += half;
+      manualOffset = 320; // ellentétes irányból indul, 0-ra cseng → sima animáció
+    });
+
+    document.querySelector('.marquee-next').addEventListener('click', () => {
+      const half = track.scrollWidth / 2;
+      autoPos += 320;
+      if (autoPos >= half) autoPos -= half;
+      manualOffset = -320;
+    });
+
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(el => {
+        if (el.isIntersecting) { el.target.classList.add('visible'); observer.unobserve(el.target); }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
