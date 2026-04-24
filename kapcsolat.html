@@ -290,14 +290,17 @@
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
           body: new URLSearchParams(formData).toString(),
         });
+        const bodyText = await response.text();
+        console.log('Netlify form response:', response.status, bodyText.slice(0, 500));
         if (response.ok) {
           success.style.display = 'block';
           form.reset();
         } else {
-          alert('Nem sikerült elküldeni. Próbáld újra, vagy írj közvetlenül: tomi.barna1@gmail.com');
+          alert('Nem sikerült elküldeni (HTTP ' + response.status + '). Írj közvetlenül: tomi.barna1@gmail.com');
         }
       } catch (err) {
-        alert('Hálózati hiba. Próbáld újra, vagy írj közvetlenül: tomi.barna1@gmail.com');
+        console.error('Form submit error:', err);
+        alert('Hálózati hiba: ' + err.message + '. Írj közvetlenül: tomi.barna1@gmail.com');
       }
     });
   </script>
