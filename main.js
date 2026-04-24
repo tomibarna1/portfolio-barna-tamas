@@ -167,3 +167,19 @@ if (langBtn) {
     applyLang(next);
   });
 }
+
+// ── HAMBURGER (mobile nav) ──
+const hamburger = document.getElementById('hamburgerToggle');
+const navEl = document.querySelector('nav');
+if (hamburger && navEl) {
+  hamburger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    navEl.classList.toggle('open');
+  });
+  navEl.querySelectorAll('ul a').forEach(a =>
+    a.addEventListener('click', () => navEl.classList.remove('open'))
+  );
+  document.addEventListener('click', (e) => {
+    if (!navEl.contains(e.target)) navEl.classList.remove('open');
+  });
+}

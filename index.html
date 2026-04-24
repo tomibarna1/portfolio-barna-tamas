@@ -93,7 +93,7 @@
       font-weight: 300;
       max-width: 360px;
       line-height: 1.85;
-      margin-bottom: 3rem;
+      margin-bottom: 42px;
     }
 
     .hero-cta {
@@ -277,7 +277,41 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
-      .hero-left { width: 100%; padding: 7rem 1.5rem 3rem; }
+      .hero {
+        display: flex;
+        flex-direction: column;
+        min-height: auto;
+      }
+      .hero-left {
+        order: 1;
+        width: 100%;
+        min-height: auto;
+        padding: 5rem 1.5rem 1rem;
+      }
+      .hero-label {
+        font-size: 0.62rem;
+        margin-bottom: 0.75rem;
+      }
+      .hero-left h1 { margin-bottom: 1.25rem; }
+      .hero-left p { margin-bottom: 32px; }
+      .hero-fade { display: none; }
+      .hero-slide {
+        order: 2;
+        position: relative;
+        inset: auto;
+        width: 100vw;
+        max-width: none;
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+        height: 55vh;
+        object-fit: cover;
+        object-position: center center;
+        display: none;
+        opacity: 1;
+        -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 18%);
+        mask-image: linear-gradient(to bottom, transparent 0%, black 18%);
+      }
+      .hero-slide.active { display: block; }
       .slide-prev { left: 1rem; }
       .slide-next { right: 1rem; }
       .cta-strip { flex-direction: column; gap: 1.5rem; text-align: center; }
@@ -297,6 +331,9 @@
     <div class="nav-controls">
       <button class="lang-btn" id="langToggle">EN</button>
       <button class="theme-btn" id="themeToggle" aria-label="Téma váltás"></button>
+      <button class="hamburger-btn" id="hamburgerToggle" aria-label="Menü">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
     </div>
   </nav>
 
