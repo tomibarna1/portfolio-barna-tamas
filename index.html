@@ -30,16 +30,16 @@
 
     .hero-slide.active { opacity: 1; }
 
-    /* Szöveg a bal oldalon, relatív pozícióban */
+    /* Szöveg a bal oldalon, relatív pozícióban — felső harmad */
     .hero-left {
       position: relative;
       z-index: 2;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
       min-height: 100vh;
       width: 50%;
-      padding: 8rem 3.5rem 5rem 3rem;
+      padding: 11rem 3.5rem 5rem 3rem;
     }
 
     /* ── HERO SZÖVEG ANIMÁCIÓ ── */
@@ -105,30 +105,37 @@
     .btn-dark {
       display: inline-block;
       padding: 1.1rem 2.75rem;
-      background: var(--text);
-      color: #ffffff;
+      background: var(--accent);
+      color: #ffffff !important;
       text-decoration: none;
       font-size: 1rem;
       font-weight: 500;
-      border-radius: 3px;
-      transition: opacity 0.2s;
+      border-radius: 8px;
+      transition: background 0.2s, color 0.2s;
     }
 
-    .btn-dark:hover { opacity: 0.75; }
+    .btn-dark:hover {
+      background: var(--text);
+      color: var(--bg) !important;
+    }
 
     .btn-outline {
       display: inline-block;
       padding: 1.1rem 2.75rem;
-      border: 1.5px solid #bbb;
-      color: var(--text);
+      border: 1.5px solid var(--accent);
+      background: #ffffff;
+      color: var(--accent);
       text-decoration: none;
       font-size: 1rem;
-      font-weight: 400;
-      border-radius: 3px;
-      transition: border-color 0.2s;
+      font-weight: 500;
+      border-radius: 8px;
+      transition: background 0.2s, color 0.2s;
     }
 
-    .btn-outline:hover { border-color: var(--text); }
+    .btn-outline:hover {
+      background: var(--accent);
+      color: #ffffff;
+    }
 
     /* ── MARQUEE FILMSTRIP ── */
     .marquee-section {
@@ -187,7 +194,11 @@
       transition: background 0.2s, border-color 0.2s;
     }
 
-    .marquee-arrow:hover { background: #f0f0ee; border-color: #bbb; }
+    .marquee-arrow:hover {
+      background: var(--text);
+      color: var(--bg);
+      border-color: var(--text);
+    }
     .marquee-prev { left: 1rem; }
     .marquee-next { right: 1rem; }
 
@@ -199,17 +210,23 @@
 
     .marquee-all-btn {
       text-decoration: none;
-      color: var(--muted);
-      font-size: 0.78rem;
-      font-weight: 300;
-      letter-spacing: 0.1em;
+      color: var(--text);
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 3px;
-      transition: color 0.2s, border-color 0.2s;
+      padding: 0.7rem 1.8rem;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 100px;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
     }
 
-    .marquee-all-btn:hover { color: var(--text); border-color: var(--text); }
+    .marquee-all-btn:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #ffffff;
+    }
 
     /* ── CTA STRIP ── */
     .cta-strip {
@@ -358,7 +375,7 @@
 
   <!-- CTA -->
   <div class="cta-strip reveal">
-    <h2 data-i18n="cta-title">Legyen szó sportautóról,<br>oldtimeről vagy éjszakai motorosról.</h2>
+    <h2 data-i18n="cta-title">Legyen szó sportautóról,<br>oldtimeről vagy éjszakai motorozásról.</h2>
     <div class="cta-links">
       <a href="munkak.html" class="cta-link">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">

@@ -129,12 +129,12 @@
     }
 
     .chips input[type="radio"]:checked + label {
-      background: var(--text);
+      background: var(--accent);
       color: #ffffff;
-      border-color: var(--text);
+      border-color: var(--accent);
     }
 
-    .chips label:hover { color: var(--text); border-color: var(--text); }
+    .chips label:hover { color: var(--accent); border-color: var(--accent); }
 
     /* ── SUBMIT ── */
     .btn-submit {
@@ -191,21 +191,10 @@
 
     <div class="contact-wrap">
 
-      <!-- BAL: intro + social -->
+      <!-- BAL: intro -->
       <div class="contact-intro">
         <h2 data-i18n="kapcsolat-title">Dolgozzunk<br>együtt.</h2>
         <p data-i18n="kapcsolat-intro">Van egy autód vagy motorod, amelyről igazán méltó képet vagy videót szeretnél? Keress meg — meghallgatom az elképzelésed és megtaláljuk a legjobb megközelítést.<br><br>A lehető leggyorsabban válaszolok.</p>
-
-        <div class="contact-socials">
-          <a href="https://www.instagram.com" target="_blank" class="social-link">
-            Instagram
-            <span>↗</span>
-          </a>
-          <a href="https://www.youtube.com" target="_blank" class="social-link">
-            YouTube
-            <span>↗</span>
-          </a>
-        </div>
       </div>
 
       <!-- JOBB: form -->
@@ -225,6 +214,9 @@
 
               <input type="radio" name="jarmu" id="k-auto-motor" value="Autó+Motor" checked>
               <label for="k-auto-motor" data-i18n="chip-auto-motor">Autó+Motor</label>
+
+              <input type="radio" name="jarmu" id="k-egyeb" value="Egyéb">
+              <label for="k-egyeb" data-i18n="chip-egyeb">Egyéb</label>
             </div>
           </div>
 
@@ -240,6 +232,9 @@
 
               <input type="radio" name="szolgaltatas" id="k-foto-video" value="Fotó+Videó" checked>
               <label for="k-foto-video" data-i18n="chip-foto-video">Fotó+Videó</label>
+
+              <input type="radio" name="szolgaltatas" id="k-szolg-egyeb" value="Egyéb">
+              <label for="k-szolg-egyeb" data-i18n="chip-szolg-egyeb">Egyéb</label>
             </div>
           </div>
 
@@ -273,12 +268,36 @@
 
   <script src="main.js"></script>
   <script>
-    // Lokális teszteléshez (Netlify-on a data-netlify kezeli automatikusan)
-    document.getElementById('contactForm').addEventListener('submit', function(e) {
-      if (!window.location.hostname.includes('netlify')) {
-        e.preventDefault();
-        document.getElementById('formSuccess').style.display = 'block';
-        this.reset();
+    // AJAX-alapú form submit — nem navigál el, success message in-page
+    document.getElementById('contactForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const form = this;
+      const success = document.getElementById('formSuccess');
+      const isLocal = location.protocol === 'file:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+
+      if (isLocal) {
+        // Helyi teszt: csak kiírjuk hogy sikerült
+        success.style.display = 'block';
+        form.reset();
+        return;
+      }
+
+      // Netlify: POST-olunk AJAX-szal, majd success message
+      const formData = new FormData(form);
+      try {
+        const response = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(formData).toString(),
+        });
+        if (response.ok) {
+          success.style.display = 'block';
+          form.reset();
+        } else {
+          alert('Nem sikerült elküldeni. Próbáld újra, vagy írj közvetlenül: tomi.barna1@gmail.com');
+        }
+      } catch (err) {
+        alert('Hálózati hiba. Próbáld újra, vagy írj közvetlenül: tomi.barna1@gmail.com');
       }
     });
   </script>

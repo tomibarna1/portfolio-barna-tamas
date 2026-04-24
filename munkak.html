@@ -8,6 +8,9 @@
   <link rel="stylesheet" href="style.css" />
   <script>if(localStorage.getItem('theme')==='dark')document.documentElement.classList.add('dark');</script>
   <style>
+    /* Szélesebb tartalom a munkák oldalon */
+    .page-content { max-width: 1200px; }
+
     /* ── MÉDIA TABS ── */
     .media-tabs {
       display: flex;
@@ -45,47 +48,52 @@
       background: var(--text);
     }
 
-    /* ── FOTÓK LAYOUT: sidebar + galéria ── */
+    /* ── FOTÓK LAYOUT: chip sidebar + galéria ── */
     .foto-layout {
       display: grid;
-      grid-template-columns: 180px 1fr;
+      grid-template-columns: 160px 1fr;
       gap: 3rem;
       align-items: start;
     }
 
     .filter-sidebar {
       position: sticky;
-      top: 90px;
+      top: 110px;
     }
 
     .filter-list {
       list-style: none;
       display: flex;
       flex-direction: column;
+      align-items: flex-start;
+      gap: 0.55rem;
     }
 
     .filter-btn {
       font-family: 'Inter', sans-serif;
-      font-size: 1rem;
-      font-weight: 400;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
       color: var(--muted);
-      background: none;
-      border: none;
+      background: transparent;
+      border: 1.5px solid var(--border);
+      border-radius: 100px;
       cursor: pointer;
-      text-align: left;
-      padding: 0.75rem 0;
-      border-bottom: 1px solid var(--border);
-      transition: color 0.2s;
-      width: 100%;
+      padding: 0.55rem 1.4rem;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
     }
 
-    .filter-btn:first-child { border-top: 1px solid var(--border); }
-    .filter-btn:hover { color: var(--text); }
-    .filter-btn.active { color: var(--text); font-weight: 500; }
+    .filter-btn:hover { color: var(--accent); border-color: var(--accent); }
+    .filter-btn.active {
+      background: var(--accent);
+      color: #ffffff;
+      border-color: var(--accent);
+    }
 
     /* ── GALÉRIA ── */
     .gallery {
-      columns: 2;
+      columns: 3;
       column-gap: 0.75rem;
     }
 
@@ -139,6 +147,32 @@
       border: none;
     }
 
+    /* ── SHORTOK (9:16 függőleges) ── */
+    .shorts-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    .short-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .short-item video {
+      width: 100%;
+      aspect-ratio: 9/16;
+      display: block;
+      border: none;
+      object-fit: cover;
+    }
+
+    @media (max-width: 768px) {
+      .shorts-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
     /* ── LIGHTBOX ── */
     .lightbox {
       display: none;
@@ -159,15 +193,8 @@
     @media (max-width: 768px) {
       .foto-layout { grid-template-columns: 1fr; gap: 1.5rem; }
       .filter-sidebar { position: static; }
-      .filter-list { flex-direction: row; flex-wrap: wrap; gap: 0.4rem; border-top: none; }
-      .filter-btn {
-        border: 1px solid var(--border) !important;
-        border-radius: 100px;
-        padding: 0.35rem 0.9rem;
-        width: auto;
-        font-size: 0.78rem;
-      }
-      .filter-btn.active { background: var(--text); color: #fff; border-color: var(--text) !important; }
+      .filter-list { flex-direction: row; flex-wrap: wrap; gap: 0.45rem; }
+      .filter-btn { padding: 0.45rem 1.05rem; font-size: 0.76rem; }
       .gallery { columns: 1; }
       .videos-grid, .reels-grid { grid-template-columns: 1fr; }
     }
@@ -313,6 +340,45 @@
         <div class="gallery-item" data-cat="auto">
           <img src="images/rs7-center.png"         alt="Audi RS7 — váltó"              loading="lazy" />
         </div>
+        <div class="gallery-item" data-cat="auto">
+          <img src="images/m4-blue-tunnel.jpg"     alt="BMW M4 kék — fénycsatorna"     loading="lazy" />
+        </div>
+        <div class="gallery-item" data-cat="auto">
+          <img src="images/rs7-taillight.jpg"      alt="Audi RS7 — hátsó lámpa"        loading="lazy" />
+        </div>
+        <div class="gallery-item" data-cat="auto">
+          <img src="images/porsche-clock.jpg"      alt="Porsche — óra"                 loading="lazy" />
+        </div>
+        <div class="gallery-item" data-cat="auto">
+          <img src="images/cayenne-white.jpg"      alt="Porsche Cayenne — fehér"       loading="lazy" />
+        </div>
+        <div class="gallery-item" data-cat="auto">
+          <img src="images/m2-engine.jpg"          alt="BMW M2 — motor"                loading="lazy" />
+        </div>
+        <div class="gallery-item" data-cat="auto">
+          <img src="images/sq2-nardo.jpg"          alt="Audi SQ2 — Nardo grey"         loading="lazy" />
+        </div>
+        <div class="gallery-item" data-cat="auto">
+          <img src="images/m4-matte-black.jpg"     alt="BMW M4 — matt fekete"          loading="lazy" />
+        </div>
+        <div class="gallery-item" data-cat="auto">
+          <img src="images/m4-wheel-int.jpg"       alt="BMW M4 — belső, kormány"       loading="lazy" />
+        </div>
+        <div class="gallery-item" data-cat="motor">
+          <img src="images/xjr-yellow-wall.jpg"    alt="Yamaha XJR1300 — fal előtt"    loading="lazy" />
+        </div>
+        <div class="gallery-item" data-cat="motor">
+          <img src="images/benelli-road-mirror.jpg" alt="Benelli — menetben, tükörből" loading="lazy" />
+        </div>
+        <div class="gallery-item" data-cat="motor">
+          <img src="images/benelli-rider.jpg"      alt="Benelli — napsütésben"         loading="lazy" />
+        </div>
+        <div class="gallery-item" data-cat="motor">
+          <img src="images/benelli-sand.jpg"       alt="Benelli — homokon"             loading="lazy" />
+        </div>
+        <div class="gallery-item" data-cat="motor">
+          <img src="images/bmw-k1600-rear.jpg"     alt="BMW K1600 — hátulról"          loading="lazy" />
+        </div>
       </div><!-- /.gallery -->
       </div><!-- /.foto-layout -->
     </div><!-- /#tab-foto -->
@@ -338,23 +404,23 @@
 
       <div class="video-section">
         <h3 data-i18n="local-label">Shortok</h3>
-        <div class="videos-grid">
-          <div class="video-item">
+        <div class="shorts-grid">
+          <div class="short-item">
             <video src="videos/darktrace-short.mp4" poster="images/thumb-darktrace.jpg" controls preload="none"></video>
           </div>
-          <div class="video-item">
+          <div class="short-item">
             <video src="videos/ferrari-v2.mp4" poster="images/thumb-ferrari.jpg" controls preload="none"></video>
           </div>
-          <div class="video-item">
+          <div class="short-item">
             <video src="videos/m3cs-reklam.mp4" poster="images/thumb-m3cs.jpg" controls preload="none"></video>
           </div>
-          <div class="video-item">
+          <div class="short-item">
             <video src="videos/passat-edit.mp4" poster="images/thumb-passat.jpg" controls preload="none"></video>
           </div>
-          <div class="video-item">
+          <div class="short-item">
             <video src="videos/rsq8-novitya.mp4" poster="images/thumb-rsq8.jpg" controls preload="none"></video>
           </div>
-          <div class="video-item">
+          <div class="short-item">
             <video src="videos/skyfol-logo.mp4" poster="images/thumb-skyfol.jpg" controls preload="none"></video>
           </div>
         </div>
@@ -372,6 +438,18 @@
 
   <script src="main.js"></script>
   <script>
+    // Galéria random sorrendbe keverés (Fisher-Yates)
+    (function shuffleGallery() {
+      const gallery = document.querySelector('.gallery');
+      if (!gallery) return;
+      const items = Array.from(gallery.children);
+      for (let i = items.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [items[i], items[j]] = [items[j], items[i]];
+      }
+      items.forEach(el => gallery.appendChild(el));
+    })();
+
     // Media tabs
     const mediaTabs = document.querySelectorAll('.media-tab');
     mediaTabs.forEach(tab => {
